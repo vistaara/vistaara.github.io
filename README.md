@@ -1,2 +1,0 @@
-# vistaara.github.io
-Website
