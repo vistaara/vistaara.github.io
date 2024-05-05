@@ -1,1 +1,76 @@
-Hello World
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vistaara - Coming soon</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            overflow: hidden;
+        }
+        #canvas {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <div class="content">
+        <h1>Welcome to Vistaara</h1>
+        <p>Check back later to see what we are up to.</p>
+    </div>
+    <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        var particles = [];
+        for(var i = 0; i < canvas.width * canvas.height / 10000; i++) {
+            particles.push(new particle());
+        }
+
+        function particle() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.speedx = Math.random() * 2 - 1;
+            this.speedy = Math.random() * 2 - 1;
+        }
+
+        function update() {
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            for(var i in particles) {
+                var part = particles[i];
+                ctx.beginPath();
+                ctx.arc(part.x, part.y, Math.random() * 1 + 1, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fillStyle = '#fff';
+                ctx.fill();
+
+                part.x += part.speedx;
+                part.y += part.speedy;
+                if(part.x > canvas.width || part.x < 0) part.speedx *= -1;
+                if(part.y > canvas.height || part.y < 0) part.speedy *= -1;
+            }
+        }
+
+        setInterval(update, 1000/60);
+    </script>
+</body>
+</html>
+
